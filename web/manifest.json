@@ -1,11 +1,11 @@
 {
-    "name": "mobile_app",
-    "short_name": "mobile_app",
+    "name": "Elwafy Care",
+    "short_name": "Elwafy Care",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#0A58CA",
+    "theme_color": "#0A58CA",
+    "description": "Elwafy Mom, Kids and Baby Spa by Bidan Elfi",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

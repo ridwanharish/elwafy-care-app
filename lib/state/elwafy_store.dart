@@ -20,7 +20,7 @@ class ElwafyStore extends ChangeNotifier {
   AppUser? _loggedInMitra;
   AppUser? get loggedInMitra => _loggedInMitra;
 
-  // Token tugas yang sedang dibuka di Portal Mitra (dari simulasi klik link WA)
+  // Token tugas yang sedang dibuka di Portal Mitra
   String? _openedTaskToken;
   String? get openedTaskToken => _openedTaskToken;
 
@@ -90,7 +90,7 @@ class ElwafyStore extends ChangeNotifier {
       passwordHash: 'staf123',
       role: UserRole.karyawan,
       whatsapp: '082160004455',
-      wilayah: 'Outlet Medan Johor & Sekitarnya',
+      wilayah: 'Outlet Sei Mencirim, Kec. Sunggal',
       spesialisasi: 'Baby Hydrotherapy & Kids Spa',
     ),
     const AppUser(
@@ -100,7 +100,7 @@ class ElwafyStore extends ChangeNotifier {
       passwordHash: 'bunda123',
       role: UserRole.customer,
       whatsapp: '081260998877',
-      wilayah: 'Medan Johor',
+      wilayah: 'Jl. Sei Mencirim, Kec. Sunggal',
       spesialisasi: 'Pelanggan Tetap Elwafy',
     ),
   ];
@@ -117,26 +117,19 @@ class ElwafyStore extends ChangeNotifier {
   final List<Outlet> _outlets = [
     const Outlet(
       id: 'out-1',
-      nama: 'Outlet Utama Elwafy Care — Medan Johor',
-      alamat: 'Jl. Karya Wisata No. 48, Pangkalan Masyhur, Kec. Medan Johor, Kota Medan',
-      wilayah: 'Medan Johor',
+      nama: 'Outlet Utama Elwafy Care — Sei Mencirim, Sunggal',
+      alamat:
+          'Jl. Sei Mencirim, Medan Krio / Paya Geli, Kec. Sunggal, Kabupaten Deli Serdang / Medan, Sumatera Utara 20351',
+      wilayah: 'Sei Mencirim, Kec. Sunggal',
       jamOperasional: '09.00 - 18.00 WIB (Setiap Hari)',
-      mapsUrl: 'https://maps.google.com/?q=Elwafy+Care+Medan+Johor',
-    ),
-    const Outlet(
-      id: 'out-2',
-      nama: 'Outlet Elwafy Care — Setiabudi Medan',
-      alamat: 'Jl. Setiabudi No. 112, Tj. Rejo, Kec. Medan Sunggal, Kota Medan',
-      wilayah: 'Medan Sunggal / Setiabudi',
-      jamOperasional: '09.00 - 18.00 WIB (Setiap Hari)',
-      mapsUrl: 'https://maps.google.com/?q=Elwafy+Care+Setiabudi+Medan',
+      mapsUrl:
+          'https://maps.google.com/?q=Jl.+Sei+Mencirim,+Medan+Krio+Paya+Geli,+Kec.+Sunggal,+Sumatera+Utara+20351',
     ),
   ];
   List<Outlet> get outlets => List.unmodifiable(_outlets);
 
   // Daftar Katalog (Tabel CATALOG_ITEMS)
   final List<CatalogItem> _catalog = [
-    // BABY
     const CatalogItem(
       id: 'cat-baby-1',
       nama: 'Baby Happy Massage (Pijat Bayi Sehat)',
@@ -201,8 +194,6 @@ class ElwafyStore extends ChangeNotifier {
         'Pemeriksaan area telinga oleh tenaga bidan',
       ],
     ),
-
-    // KIDS
     const CatalogItem(
       id: 'cat-kids-1',
       nama: 'Kids Immune & Appetite Booster Massage (1–7 Tahun)',
@@ -235,8 +226,6 @@ class ElwafyStore extends ChangeNotifier {
         'Membuat anak rileks dan segar kembali',
       ],
     ),
-
-    // MOM
     const CatalogItem(
       id: 'cat-mom-1',
       nama: 'Mom Postnatal Care (Pijat Nifas + Pijat Oksitosin/Laktasi)',
@@ -303,6 +292,222 @@ class ElwafyStore extends ChangeNotifier {
   ];
   List<CatalogItem> get catalog => List.unmodifiable(_catalog);
 
+  // Berita & Edukasi Kesehatan Bunda & Buah Hati (Diadaptasi dari IG @elwafy.care)
+  final List<HealthArticle> _articles = [
+    HealthArticle(
+      id: 'art-1',
+      judul: 'Fase 0–3 Bulan yang Sering Bikin Panik, Padahal Normal!!',
+      kategori: 'Tumbuh Kembang Bayi',
+      ringkasan:
+          'Sering kaget sendiri saat tidur, sering menggeliat (ngulet), hingga menangis tanpa alasan jelas? Tenang Bun, kenali 5 hal normal pada bayi 0–3 bulan.',
+      isiParagraf: const [
+        'Menjadi orang tua baru memang penuh kejutan. Pada usia 0–3 bulan, bayi sedang beradaptasi dari rahim yang hangat ke dunia luar. Banyak gerakan refleks bayi yang sering membuat Bunda panik, padahal itu bagian normal dari perkembangan sarafnya.',
+        'Pertama adalah Refleks Moro (sering terkejut sendiri dengan tangan terentang saat tidur). Ini menandakan sistem saraf pusat bayi bekerja dengan baik. Kedua, sering menggeliat (ngulet) dan mengejan karena otot pencernaannya masih belajar mendorong gas serta BAB.',
+        'Untuk membantu bayi merasa nyaman, tidak mudah kembung/kolik, dan tidur lebih lelap di malam hari, rutinkan stimulasi pijat lembut (Baby Massage) oleh tenaga bidan tersertifikasi.',
+      ],
+      poinPenting: const [
+        'Sering bangun malam & menyusu berkali-kali adalah wajar karena lambung bayi masih kecil.',
+        'Mengejutkan diri sendiri (Refleks Moro) akan berkurang seiring usia 3–4 bulan.',
+        'Segera waspada jika disertai demam >= 38°C, napas cepat/sesak, atau bayi tampak lemas tidak mau menyusu.',
+      ],
+      penulis: 'Bidan Elfi, S.Tr.Keb',
+      waktuBacaMenit: 3,
+      tanggalPublikasi: DateTime(2026, 11, 10),
+      relatedCatalogItemId: 'cat-baby-1',
+      imageUrl:
+          'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=700&q=80',
+    ),
+    HealthArticle(
+      id: 'art-2',
+      judul: 'Tips Jaga Imun Anak: Bedakan Demam Biasa vs Demam Virus Yuk!',
+      kategori: 'Pernapasan & Imun',
+      ringkasan:
+          'Cuaca di Medan sedang tidak menentu. Yuk kenali perbedaan ciri demam biasa karena kelelahan dengan demam akibat infeksi virus pada si kecil.',
+      isiParagraf: const [
+        'Di musim pancaroba sekarang, banyak anak yang mudah terserang batuk, pilek, atau demam. Penting bagi Bunda untuk tetap tenang dan mengamati gejala penyerta pada anak.',
+        'Demam biasa (misalnya pasca imunisasi atau kelelahan bermain) umumnya bersuhu 37,5°C – 38,2°C, anak masih mau bermain/minum, dan membaik dalam 1–2 hari setelah istirahat cukup.',
+        'Sementara demam virus biasanya disertai suhu lebih tinggi (>38,5°C), anak tampak lemas, nyeri otot, batuk pilek, atau nafsu makan menurun drastis (GTM). Saat masa pemulihan atau pencegahan, Pijat Tuina Anak sangat efektif menjaga daya tahan tubuh.',
+      ],
+      poinPenting: const [
+        'Pastikan kecukupan cairan (ASI atau air putih) agar anak tidak dehidrasi.',
+        'Tidur cukup minimal 10–12 jam per hari untuk anak usia balita.',
+        'Pijat akupresur Tuina membantu merangsang titik meridian limpa & paru untuk imunitas alami.',
+      ],
+      penulis: 'Tim Medis Elwafy Care',
+      waktuBacaMenit: 4,
+      tanggalPublikasi: DateTime(2026, 11, 12),
+      relatedCatalogItemId: 'cat-kids-1',
+      imageUrl:
+          'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=700&q=80',
+    ),
+    HealthArticle(
+      id: 'art-3',
+      judul: 'ASI Seret di Minggu Pertama Melahirkan? Kenali Pijat Oksitosin',
+      kategori: 'Laktasi & Ibu Nifas',
+      ringkasan:
+          'Payudara terasa penuh tapi ASI sulit keluar? Jangan stres sendiri Bun, hormon oksitosin sangat dipengaruhi oleh kenyamanan tubuh dan punggung Bunda.',
+      isiParagraf: const [
+        'Banyak Bunda pasca melahirkan mengalami kelelahan fisik dan kurang tidur yang menghambat keluarnya hormon oksitosin (hormon pelancar pengeluaran ASI). Akibatnya, payudara terasa kencang/bengkak namun aliran ASI tidak lancar.',
+        'Pijat Oksitosin dilakukan di sepanjang tulang belakang (punggung) Bunda untuk merilekskan saraf, dikombinasikan dengan Pijat Laktasi lembut pada area payudara guna membuka saluran ASI yang tersumbat.',
+        'Kabar baiknya, Bunda tidak perlu repot keluar rumah saat masa nifas karena Bidan Mitra Elwafy Care siap datang langsung ke rumah Bunda (Homecare).',
+      ],
+      poinPenting: const [
+        'Kompres hangat payudara sebelum menyusui dan kompres dingin bila bengkak.',
+        'Pijat titik oksitosin di punggung selama 15 menit membuat Bunda jauh lebih rileks.',
+        'Susui bayi sesering mungkin (on-demand) setiap 2–3 jam.',
+      ],
+      penulis: 'Bidan Elfi, S.Tr.Keb',
+      waktuBacaMenit: 3,
+      tanggalPublikasi: DateTime(2026, 11, 13),
+      relatedCatalogItemId: 'cat-mom-1',
+      imageUrl:
+          'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=700&q=80',
+    ),
+    HealthArticle(
+      id: 'art-4',
+      judul: 'Bayi Batuk Pilek & Grok-grok: Manfaat Terapi Uap Nebu + Tuina',
+      kategori: 'Pernapasan & Imun',
+      ringkasan:
+          'Bayi belum bisa membuang dahak sendiri sehingga tidurnya terganggu. Bagaimana cara melegakan pernapasannya tanpa buru-buru minum obat kimia?',
+      isiParagraf: const [
+        'Saluran napas bayi masih sangat sempit. Ketika terkena pilek atau lendir berlebih, suara napasnya sering terdengar "grok-grok" dan membuat bayi rewel karena sulit menyusu.',
+        'Melalui terapi inhalasi uap (Nebulizer) dengan cairan steril sesuai takaran, dikombinasikan penyinaran hangat dan Pijat Tuina Cough & Cold serta tepuk punggung (chest physiotherapy), dahak bayi akan encer dan keluar alami lewat feses atau muntahan lendir.',
+      ],
+      poinPenting: const [
+        'Hindari paparan asap rokok dan debu di kamar tidur bayi.',
+        'Jemur bayi di pagi hari sekitar pukul 07.30 – 08.00 selama 10–15 menit.',
+        'Terapi uap & pijat dada oleh bidan membantu mengencerkan lendir secara aman.',
+      ],
+      penulis: 'Bidan Nisa, Amd.Keb',
+      waktuBacaMenit: 3,
+      tanggalPublikasi: DateTime(2026, 11, 14),
+      relatedCatalogItemId: 'cat-baby-3',
+      imageUrl:
+          'https://images.unsplash.com/photo-1544126592-807ade215a0b?auto=format&fit=crop&w=700&q=80',
+    ),
+    HealthArticle(
+      id: 'art-5',
+      judul: 'Anak GTM (Gerakan Tutup Mulut)? Coba Stimulasi Pijat Tuina!',
+      kategori: 'Gizi & Nutrisi Anak',
+      ringkasan:
+          'Si kecil tiba-tiba menolak makan atau mengemut makanan berjam-jam? Yuk pahami penyebab pencernaan lelah pada balita dan solusinya.',
+      isiParagraf: const [
+        'Gerakan Tutup Mulut (GTM) sering kali bukan semata karena anak bosan menu makanan, melainkan karena sirkulasi pencernaan yang kurang optimal atau perut terasa begah.',
+        'Pijat Tuina Pediatrik berfokus pada titik akupresur tangan, perut, dan punggung anak untuk membantu memperlancar gerakan peristaltik usus sehingga anak kembali merasa lapar secara alami.',
+      ],
+      poinPenting: const [
+        'Buat jadwal makan teratur dan hindari camilan manis 1 jam sebelum makan utama.',
+        'Kombinasikan menu tinggi protein hewani setiap hari untuk mencegah stunting.',
+        'Sesi Pijat Tuina 3–4 kali berturut-turut memberikan hasil paling optimal.',
+      ],
+      penulis: 'Bidan Putri, S.Tr.Keb',
+      waktuBacaMenit: 3,
+      tanggalPublikasi: DateTime(2026, 11, 14),
+      relatedCatalogItemId: 'cat-kids-1',
+      imageUrl:
+          'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=700&q=80',
+    ),
+  ];
+  List<HealthArticle> get articles => List.unmodifiable(_articles);
+
+  // Daftar Konsultan Bidan (Fitur Tanya Bidan ala Halodoc)
+  final List<MidwifeConsultant> _consultants = [
+    const MidwifeConsultant(
+      id: 'cons-1',
+      nama: 'Bidan Elfi, S.Tr.Keb',
+      spesialis: 'Konsultan Utama Laktasi, Nifas & Baby Spa',
+      kategoriSpesialis: 'Laktasi & Nifas',
+      pengalaman: '8 Tahun',
+      rating: '5.0',
+      kepuasanPersen: '100%',
+      nomorStr: 'STR. 120262118-0942',
+      sertifikasi:
+          'Founder Elwafy Care • Certified Mom & Baby Spa, Konselor Laktasi & Postnatal',
+      lokasiPraktik:
+          'Jl. Sei Mencirim, Medan Krio / Paya Geli, Kec. Sunggal, Deli Serdang / Medan 20351',
+      imageUrl:
+          'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80',
+      isOnline: true,
+      whatsapp: '082289992812',
+      topikKeahlian: [
+        'ASI Seret / Payudara Bengkak',
+        'Perawatan Nifas & Ibu Hamil',
+        'Tindik Steril & Tumbuh Kembang',
+      ],
+    ),
+    const MidwifeConsultant(
+      id: 'cons-2',
+      nama: 'Bidan Nisa, Amd.Keb',
+      spesialis: 'Spesialis Terapi Batuk Pilek Bayi & Pediatric Tuina',
+      kategoriSpesialis: 'Batuk & Flu Bayi',
+      pengalaman: '5 Tahun',
+      rating: '4.9',
+      kepuasanPersen: '99%',
+      nomorStr: 'STR. 120252120-4418',
+      sertifikasi:
+          'Certified Pediatric Tuina Massage, Baby Nebulizer & Chest Physiotherapy',
+      lokasiPraktik: 'Mitra Homecare Medan Johor, Polonia & Amplas',
+      imageUrl:
+          'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=400&q=80',
+      isOnline: true,
+      whatsapp: '081265001122',
+      topikKeahlian: [
+        'Bayi Batuk Pilek / Napas Grok-grok',
+        'Bayi Kembung, Kolik & Susah Tidur',
+        'Homecare Area Medan Johor & Amplas',
+      ],
+    ),
+    const MidwifeConsultant(
+      id: 'cons-3',
+      nama: 'Bidan Putri, S.Tr.Keb',
+      spesialis: 'Spesialis Anak GTM (Susah Makan) & Hydrotherapy',
+      kategoriSpesialis: 'Tumbuh Kembang & GTM',
+      pengalaman: '6 Tahun',
+      rating: '4.9',
+      kepuasanPersen: '98%',
+      nomorStr: 'STR. 120262119-7731',
+      sertifikasi:
+          'Certified Baby Brain Gym, Hydrotherapy Swim & Appetite Booster Tuina',
+      lokasiPraktik: 'Mitra Homecare Medan Sunggal, Helvetia & Setiabudi',
+      imageUrl:
+          'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&q=80',
+      isOnline: true,
+      whatsapp: '081377889900',
+      topikKeahlian: [
+        'Anak GTM (Gerakan Tutup Mulut)',
+        'Stimulasi Motorik & Baby Swim',
+        'Homecare Area Setiabudi & Sunggal',
+      ],
+    ),
+    const MidwifeConsultant(
+      id: 'cons-4',
+      nama: 'Bidan Dewi Sartika, Amd.Keb',
+      spesialis: 'Spesialis Pijat Ibu Hamil (Prenatal) & Imun Anak',
+      kategoriSpesialis: 'Laktasi & Nifas',
+      pengalaman: '5 Tahun',
+      rating: '4.9',
+      kepuasanPersen: '99%',
+      nomorStr: 'STR. 120252121-5190',
+      sertifikasi:
+          'Certified Prenatal Gentle Massage, Oxytocin Massage & Baby Care',
+      lokasiPraktik: 'Mitra Homecare Medan Tembung, Denai & Marelan',
+      imageUrl:
+          'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=400&q=80',
+      isOnline: true,
+      whatsapp: '085261112233',
+      topikKeahlian: [
+        'Pegal Pinggang & Kaki Bengkak Ibu Hamil',
+        'Pijat Nifas & Relaksasi Bunda',
+        'Homecare Area Tembung, Denai & Marelan',
+      ],
+    ),
+  ];
+  List<MidwifeConsultant> get consultants => List.unmodifiable(_consultants);
+
+  // Daftar Ruang Chat Konsultasi (Tanya Bidan)
+  final List<ConsultThread> _consultThreads = [];
+  List<ConsultThread> get consultThreads => List.unmodifiable(_consultThreads);
+
   // Daftar Reservasi (Tabel RESERVATIONS)
   final List<Reservation> _reservations = [];
   List<Reservation> get reservations => List.unmodifiable(_reservations);
@@ -315,12 +520,160 @@ class ElwafyStore extends ChangeNotifier {
     _loggedInAdmin = _users.firstWhere((u) => u.role == UserRole.admin);
     _loggedInMitra = _users.firstWhere((u) => u.id == 'usr-mitra-1');
     _seedInitialReservations();
+    _seedInitialConsultThreads();
+  }
+
+  void _seedInitialConsultThreads() {
+    final now = DateTime.now();
+    for (final c in _consultants) {
+      _consultThreads.add(
+        ConsultThread(
+          id: 'thread-${c.id}',
+          consultantId: c.id,
+          consultantName: c.nama,
+          customerName: 'Bunda Pelanggan Elwafy',
+          updatedAt: now.subtract(const Duration(minutes: 10)),
+          messages: [
+            ConsultMessage(
+              id: 'msg-init-${c.id}',
+              senderName: c.nama,
+              isFromCustomer: false,
+              text:
+                  'Assalamualaikum / Halo Bunda 👋 Saya *${c.nama}* (${c.spesialis}).\n\nSilakan ceritakan keluhan Si Kecil atau Bunda di sini ya (atau pilih topik cepat di bawah). Saya siap bantu memberikan saran perawatan terbaik!',
+              timestamp: now.subtract(const Duration(minutes: 10)),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  ConsultThread getThreadForConsultant(String consultantId) {
+    return _consultThreads.firstWhere(
+      (t) => t.consultantId == consultantId,
+      orElse: () => _consultThreads.first,
+    );
+  }
+
+  // Kirim pesan dari Bunda di ruang Tanya Bidan + Balasan Pintar Otomatis beserta rekomendasi layanan
+  void sendCustomerConsultMessage(String consultantId, String questionText) {
+    final index = _consultThreads.indexWhere(
+      (t) => t.consultantId == consultantId,
+    );
+    if (index == -1) return;
+
+    final thread = _consultThreads[index];
+    final now = DateTime.now();
+    final customerName = _loggedInCustomer?.nama ?? 'Bunda';
+
+    final userMsg = ConsultMessage(
+      id: 'msg-${now.millisecondsSinceEpoch}-u',
+      senderName: customerName,
+      isFromCustomer: true,
+      text: questionText,
+      timestamp: now,
+    );
+
+    // Analisis kata kunci untuk memberikan saran kebidanan & rekomendasi layanan yang pas
+    final lower = questionText.toLowerCase();
+    String replyText;
+    String? recommendedItemId;
+
+    if (lower.contains('batuk') ||
+        lower.contains('pilek') ||
+        lower.contains('grok') ||
+        lower.contains('flu') ||
+        lower.contains('uap') ||
+        lower.contains('dahak')) {
+      replyText =
+          'Untuk keluhan batuk pilek / napas grok-grok pada bayi, pastikan suhu kamar tidak terlalu dingin dan tetap berikan ASI sesering mungkin ya Bun.\n\nJika tidak disertai demam tinggi (>38,5°C), kami sangat menyarankan *Baby Cough & Cold Therapy* (Pijat Akupresur Tuina + Sinar Hangat + Uap Nebulizer) agar dahaknya encer dan mudah keluar. Bisa kami layani Homecare ke rumah Bunda:';
+      recommendedItemId = 'cat-baby-3';
+    } else if (lower.contains('asi') ||
+        lower.contains('laktasi') ||
+        lower.contains('nifas') ||
+        lower.contains('payudara') ||
+        lower.contains('melahirkan')) {
+      replyText =
+          'Semangat mengASIhi ya Bunda! Jika ASI terasa seret atau payudara terasa kencang/bengkak, hindari memijat keras area payudara tanpa teknik yang tepat.\n\nKami merekomendasikan *Mom Postnatal Care (Pijat Nifas + Pijat Oksitosin & Laktasi)* oleh Bidan tersertifikasi untuk membuka saluran ASI dan merilekskan punggung Bunda:';
+      recommendedItemId = 'cat-mom-1';
+    } else if (lower.contains('gtm') ||
+        lower.contains('makan') ||
+        lower.contains('nafsu') ||
+        lower.contains('imun')) {
+      replyText =
+          'Anak yang sedang GTM (Gerakan Tutup Mulut) sering kali mengalami kelelahan pencernaan atau kembung ringan.\n\nBunda bisa menjadwalkan *Kids Immune & Appetite Booster Massage (Pijat Tuina)* yang berfokus pada titik meridian pencernaan & limpa untuk membantu meningkatkan nafsu makan si kecil:';
+      recommendedItemId = 'cat-kids-1';
+    } else if (lower.contains('hamil') ||
+        lower.contains('pinggang') ||
+        lower.contains('prenatal') ||
+        lower.contains('bengkak kaki')) {
+      replyText =
+          'Keluhan nyeri pinggang dan pegal kaki memang sering dialami Bunda pada trimester 2 & 3.\n\nBunda dapat mengambil layanan *Prenatal Gentle Massage* dengan posisi tidur miring yang sangat aman untuk Bunda dan janin:';
+      recommendedItemId = 'cat-mom-2';
+    } else if (lower.contains('tindik')) {
+      replyText =
+          'Di Elwafy Care, layanan *Tindik Steril Bayi* dilakukan langsung oleh Bidan menggunakan alat steril sekali pakai (minim trauma & hipoalergenik). Bisa dikerjakan di rumah Bunda (Homecare) maupun di Outlet:';
+      recommendedItemId = 'cat-baby-4';
+    } else if (lower.contains('renang') ||
+        lower.contains('swim') ||
+        lower.contains('motorik')) {
+      replyText =
+          'Untuk stimulasi motorik lengkap, paket favorit Bunda di Medan adalah *Paket Lengkap Baby Brain Gym, Swim & Massage*. Jika pesan Homecare, terapis kami yang akan membawa kolam portable higienis ke rumah Bunda:';
+      recommendedItemId = 'cat-baby-2';
+    } else {
+      replyText =
+          'Terima kasih pertanyaannya Bunda. Untuk membantu buah hati tidur lebih nyenyak, tidak mudah rewel, dan melancarkan pencernaan, kami menyarankan perawatan rutin *Baby Happy Massage*.\n\nBunda juga bisa langsung memilih layanan di bawah ini atau klik tombol WhatsApp di atas jika ingin mengirim foto/video kondisi si kecil ke ${thread.consultantName}:';
+      recommendedItemId = 'cat-baby-1';
+    }
+
+    final midwifeReply = ConsultMessage(
+      id: 'msg-${now.millisecondsSinceEpoch}-b',
+      senderName: thread.consultantName,
+      isFromCustomer: false,
+      text: replyText,
+      timestamp: now.add(const Duration(seconds: 1)),
+      recommendedCatalogItemId: recommendedItemId,
+    );
+
+    _consultThreads[index] = thread.copyWith(
+      messages: [...thread.messages, userMsg, midwifeReply],
+      updatedAt: now,
+    );
+    notifyListeners();
+  }
+
+  // Balasan manual dari Dashboard Admin ke ruang Tanya Bidan
+  void sendAdminConsultReply(String consultantId, String replyText) {
+    final index = _consultThreads.indexWhere(
+      (t) => t.consultantId == consultantId,
+    );
+    if (index == -1) return;
+
+    final thread = _consultThreads[index];
+    final now = DateTime.now();
+    final msg = ConsultMessage(
+      id: 'msg-${now.millisecondsSinceEpoch}-adm',
+      senderName: '${thread.consultantName} (Live Bidan)',
+      isFromCustomer: false,
+      text: replyText,
+      timestamp: now,
+    );
+
+    _consultThreads[index] = thread.copyWith(
+      messages: [...thread.messages, msg],
+      updatedAt: now,
+    );
+    notifyListeners();
+  }
+
+  void addHealthArticle(HealthArticle article) {
+    _articles.insert(0, article);
+    notifyListeners();
   }
 
   void _seedInitialReservations() {
     final now = DateTime.now();
 
-    // Reservasi 1: Baru masuk dari Customer Tamu (Menunggu Konfirmasi Admin)
     final res1 = Reservation(
       id: 'res-101',
       nomorReservasi: 'ELW-261030-8421',
@@ -329,7 +682,8 @@ class ElwafyStore extends ChangeNotifier {
       waPemesanSnapshot: '081362445566',
       namaPenerimaLayanan: 'Baby Arkan',
       usiaPenerima: '5 Bulan',
-      catatanKhusus: 'Bayi agak batuk ringan sejak kemarin sore, mohon bawa alat uap.',
+      catatanKhusus:
+          'Bayi agak batuk ringan sejak kemarin sore, mohon bawa alat uap.',
       mode: ServiceMode.homecare,
       alamatLengkap: 'Komp. Johor Indah Permai Blok C No. 14, Jl. Karya Wisata',
       patokan: 'Rumah pagar putih depan taman komplek',
@@ -340,14 +694,16 @@ class ElwafyStore extends ChangeNotifier {
       jamDiminta: '10.00 WIB',
       totalSnapshot: 180000,
       statusReservasi: ReservationStatus.menungguKonfirmasiAdmin,
-      catatanPembayaranInternal: 'Menunggu konfirmasi jadwal sebelum customer transfer',
+      catatanPembayaranInternal:
+          'Menunggu konfirmasi jadwal sebelum customer transfer',
       createdAt: now.subtract(const Duration(minutes: 25)),
       items: const [
         ReservationItem(
           id: 'ri-1',
           reservationId: 'res-101',
           catalogItemId: 'cat-baby-3',
-          namaItemSnapshot: 'Baby Cough & Cold Therapy (Pijat Tuina + Sinar + Nebu)',
+          namaItemSnapshot:
+              'Baby Cough & Cold Therapy (Pijat Tuina + Sinar + Nebu)',
           kategoriSnapshot: CatalogCategory.baby,
           tipeSnapshot: CatalogType.layanan,
           durasiSnapshot: 45,
@@ -359,7 +715,8 @@ class ElwafyStore extends ChangeNotifier {
           id: 'ri-2',
           reservationId: 'res-101',
           catalogItemId: 'cat-prod-1',
-          namaItemSnapshot: 'Elwafy Natural Calming Roll-On Oil (Add-on dibawa Terapis)',
+          namaItemSnapshot:
+              'Elwafy Natural Calming Roll-On Oil (Add-on dibawa Terapis)',
           kategoriSnapshot: CatalogCategory.baby,
           tipeSnapshot: CatalogType.produk,
           durasiSnapshot: null,
@@ -375,13 +732,13 @@ class ElwafyStore extends ChangeNotifier {
           statusSebelum: null,
           statusSesudah: ReservationStatus.menungguKonfirmasiAdmin,
           actorName: 'Bunda Nadira Putri (Customer Tamu)',
-          catatan: 'Reservasi baru disimpan ke database sebelum lanjut ke WhatsApp.',
+          catatan:
+              'Reservasi baru disimpan ke database sebelum lanjut ke WhatsApp.',
           createdAt: now.subtract(const Duration(minutes: 25)),
         ),
       ],
     );
 
-    // Reservasi 2: Sudah ditugaskan ke Mitra Bidan Nisa (Menunggu Respons Mitra)
     final assignment2 = TaskAssignment(
       id: 'asg-201',
       reservationId: 'res-102',
@@ -404,7 +761,8 @@ class ElwafyStore extends ChangeNotifier {
       waPemesanSnapshot: '081260998877',
       namaPenerimaLayanan: 'Bunda Sarah & Baby Zayn',
       usiaPenerima: 'Bunda (Nifas H+14) & Bayi (14 Hari)',
-      catatanKhusus: 'ASI agak seret sebelah kanan, mohon sekalian pijat laktasi ya Bidan.',
+      catatanKhusus:
+          'ASI agak seret sebelah kanan, mohon sekalian pijat laktasi ya Bidan.',
       mode: ServiceMode.homecare,
       alamatLengkap: 'Jl. Eka Rasmi Gg. Melati No. 8, Gedung Johor',
       patokan: 'Dekat Masjid Al-Ikhlas, rumah cat krem tingkat 2',
@@ -415,14 +773,16 @@ class ElwafyStore extends ChangeNotifier {
       jamDiminta: '13.30 WIB',
       totalSnapshot: 280000,
       statusReservasi: ReservationStatus.menungguResponsMitra,
-      catatanPembayaranInternal: 'Bukti transfer BSI Rp 280.000 sudah diterima di WA',
+      catatanPembayaranInternal:
+          'Bukti transfer BSI Rp 280.000 sudah diterima di WA',
       createdAt: now.subtract(const Duration(hours: 2)),
       items: const [
         ReservationItem(
           id: 'ri-3',
           reservationId: 'res-102',
           catalogItemId: 'cat-mom-3',
-          namaItemSnapshot: 'Paket Bundling Harmoni (Mom Relax Massage + Baby Spa)',
+          namaItemSnapshot:
+              'Paket Bundling Harmoni (Mom Relax Massage + Baby Spa)',
           kategoriSnapshot: CatalogCategory.mom,
           tipeSnapshot: CatalogType.paket,
           durasiSnapshot: 90,
@@ -460,13 +820,13 @@ class ElwafyStore extends ChangeNotifier {
           statusSesudah: ReservationStatus.menungguResponsMitra,
           actorUserId: 'usr-admin-1',
           actorName: 'Bidan Elfi & Owner Wahyu',
-          catatan: 'Menugaskan Mitra terdekat: Bidan Nisa, Amd.Keb (Token: TKN-ELW-9942A7B1).',
+          catatan:
+              'Menugaskan Mitra terdekat: Bidan Nisa, Amd.Keb (Token: TKN-ELW-9942A7B1).',
           createdAt: now.subtract(const Duration(minutes: 40)),
         ),
       ],
     );
 
-    // Reservasi 3: Contoh yang ditolak mitra sebelumnya sehingga Admin bisa assign ulang
     final assignment3Rejected = TaskAssignment(
       id: 'asg-301',
       reservationId: 'res-103',
@@ -476,7 +836,8 @@ class ElwafyStore extends ChangeNotifier {
       assignedUserWilayah: 'Medan Sunggal, Helvetia & Setiabudi',
       assignedByUserId: 'usr-admin-1',
       statusRespons: AssignmentResponseStatus.ditolak,
-      alasanPenolakan: 'Sedang menangani pasien persalinan mendadak di klinik pada jam tersebut.',
+      alasanPenolakan:
+          'Sedang menangani pasien persalinan mendadak di klinik pada jam tersebut.',
       tokenTugasHash: 'TKN-ELW-3310C4D9',
       expiry: now.add(const Duration(hours: 2)),
       createdAt: now.subtract(const Duration(hours: 4)),
@@ -509,7 +870,8 @@ class ElwafyStore extends ChangeNotifier {
           id: 'ri-4',
           reservationId: 'res-103',
           catalogItemId: 'cat-kids-1',
-          namaItemSnapshot: 'Kids Immune & Appetite Booster Massage (1–7 Tahun)',
+          namaItemSnapshot:
+              'Kids Immune & Appetite Booster Massage (1–7 Tahun)',
           kategoriSnapshot: CatalogCategory.kids,
           tipeSnapshot: CatalogType.layanan,
           durasiSnapshot: 45,
@@ -553,14 +915,13 @@ class ElwafyStore extends ChangeNotifier {
       ],
     );
 
-    // Reservasi 4: Kunjungan ke Outlet yang sudah diterima karyawan internal
     final assignment4 = TaskAssignment(
       id: 'asg-401',
       reservationId: 'res-104',
       assignedUserId: 'usr-karyawan-1',
       assignedUserName: 'Terapis Rina, Amd.Keb (Staf Outlet)',
       assignedUserRole: UserRole.karyawan,
-      assignedUserWilayah: 'Outlet Medan Johor & Sekitarnya',
+      assignedUserWilayah: 'Outlet Sei Mencirim, Kec. Sunggal',
       assignedByUserId: 'usr-admin-1',
       statusRespons: AssignmentResponseStatus.diterima,
       tokenTugasHash: 'INTERNAL-STAFF',
@@ -580,12 +941,14 @@ class ElwafyStore extends ChangeNotifier {
       catatanKhusus: 'Ingin tindik steril sekalian pijat bayi.',
       mode: ServiceMode.outlet,
       outletId: 'out-1',
-      outletNamaSnapshot: 'Outlet Utama Elwafy Care — Medan Johor',
+      outletNamaSnapshot:
+          'Outlet Utama Elwafy Care — Jl. Sei Mencirim, Medan Krio / Paya Geli, Kec. Sunggal',
       tanggalDiminta: now,
       jamDiminta: '11.00 WIB',
       totalSnapshot: 245000,
       statusReservasi: ReservationStatus.petugasMenerimaTugas,
-      catatanPembayaranInternal: 'DP Rp 100.000 via Transfer BSI, pelunasan di Outlet',
+      catatanPembayaranInternal:
+          'DP Rp 100.000 via Transfer BSI, pelunasan di Outlet',
       createdAt: now.subtract(const Duration(hours: 8)),
       items: const [
         ReservationItem(
@@ -621,7 +984,7 @@ class ElwafyStore extends ChangeNotifier {
           statusSebelum: null,
           statusSesudah: ReservationStatus.menungguKonfirmasiAdmin,
           actorName: 'Bunda Tari Harahap',
-          catatan: 'Reservasi kunjungan Outlet Medan Johor dibuat.',
+          catatan: 'Reservasi kunjungan Outlet Sei Mencirim, Sunggal dibuat.',
           createdAt: now.subtract(const Duration(hours: 8)),
         ),
         ReservationStatusHistory(
@@ -631,7 +994,8 @@ class ElwafyStore extends ChangeNotifier {
           statusSesudah: ReservationStatus.petugasMenerimaTugas,
           actorUserId: 'usr-admin-1',
           actorName: 'Bidan Elfi & Owner Wahyu',
-          catatan: 'Jadwal dikonfirmasi & ditugaskan ke Staf Internal: Terapis Rina, Amd.Keb.',
+          catatan:
+              'Jadwal dikonfirmasi & ditugaskan ke Staf Internal: Terapis Rina, Amd.Keb.',
           createdAt: now.subtract(const Duration(hours: 6)),
         ),
       ],
@@ -662,7 +1026,6 @@ class ElwafyStore extends ChangeNotifier {
     ]);
   }
 
-  // Navigasi Portal (Customer / Admin / Mitra)
   void setPortalTab(int index, {String? taskToken}) {
     _activePortalTab = index;
     if (taskToken != null) {
@@ -671,18 +1034,38 @@ class ElwafyStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Simulasi Login / Logout Customer (untuk menguji Guest vs Logged-in Autofill)
   void toggleCustomerLogin() {
     if (_loggedInCustomer == null) {
-      _loggedInCustomer =
-          _users.firstWhere((u) => u.role == UserRole.customer);
+      _loggedInCustomer = _users.firstWhere((u) => u.role == UserRole.customer);
     } else {
       _loggedInCustomer = null;
     }
     notifyListeners();
   }
 
-  // Pilih akun Mitra yang sedang aktif di Portal Mitra
+  void loginCustomCustomer({
+    required String nama,
+    required String whatsapp,
+    required String wilayah,
+  }) {
+    _loggedInCustomer = AppUser(
+      id: 'usr-cust-${DateTime.now().millisecondsSinceEpoch}',
+      nama: nama,
+      emailOrUsername: '${nama.toLowerCase().replaceAll(' ', '')}@elwafy.app',
+      passwordHash: 'bunda123',
+      role: UserRole.customer,
+      whatsapp: whatsapp,
+      wilayah: wilayah,
+      spesialisasi: 'Member Elwafy Care',
+    );
+    notifyListeners();
+  }
+
+  void logoutCustomer() {
+    _loggedInCustomer = null;
+    notifyListeners();
+  }
+
   void switchActiveMitra(AppUser? mitra) {
     _loggedInMitra = mitra;
     notifyListeners();
@@ -693,7 +1076,6 @@ class ElwafyStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Manajemen Keranjang Customer
   int get totalCartItems =>
       _cart.values.fold(0, (prev, element) => prev + element);
 
@@ -739,7 +1121,6 @@ class ElwafyStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ALUR 1: CUSTOMER MEMBUAT RESERVASI (Sesuai Flowchart Halaman 5 & 6)
   Reservation createCustomerReservation({
     required String namaPemesan,
     required String waPemesan,
@@ -801,8 +1182,7 @@ class ElwafyStore extends ChangeNotifier {
       actorName: _loggedInCustomer != null
           ? '${_loggedInCustomer!.nama} (Akun Customer)'
           : '$namaPemesan (Customer Tamu)',
-      catatan:
-          'Reservasi disimpan ke database sebelum diarahkan ke WhatsApp.',
+      catatan: 'Reservasi disimpan ke database sebelum diarahkan ke WhatsApp.',
       createdAt: now,
     );
 
@@ -834,10 +1214,8 @@ class ElwafyStore extends ChangeNotifier {
       statusHistory: [initialHistory],
     );
 
-    // Simpan ke database (urutan teratas)
     _reservations.insert(0, newRes);
 
-    // Kirim notifikasi ringkas ke Telegram Admin (Tetap tersimpan walau notif dimatikan)
     _sendTelegramNotification(
       reservationNomor: nomorReservasi,
       judul: '🆕 Reservasi Baru Masuk ($nomorReservasi)',
@@ -845,13 +1223,11 @@ class ElwafyStore extends ChangeNotifier {
           'Pemesan: $namaPemesan ($waPemesan)\nPenerima: $namaPenerima ($usiaPenerima)\nMode: ${mode.label}\nLokasi: ${mode == ServiceMode.homecare ? "$wilayahHomecare - $alamatLengkap" : selectedOutlet?.nama}\nJadwal Diminta: ${FormatHelper.tanggalIndo(tanggalDiminta)} $jamDiminta\nTotal: ${FormatHelper.rupiah(total)}',
     );
 
-    // Kosongkan keranjang setelah tersimpan
     _cart.clear();
     notifyListeners();
     return newRes;
   }
 
-  // Generator teks pesan WhatsApp Customer -> Admin (Sesuai Halaman 2, 6, 14, 17)
   String buildCustomerWhatsAppMessage(Reservation res) {
     final sb = StringBuffer();
     sb.writeln('Halo Admin *Elwafy Care (Mom, Kids & Baby Spa)* 👋');
@@ -863,7 +1239,9 @@ class ElwafyStore extends ChangeNotifier {
     sb.writeln('👤 *DATA PEMESAN & PASIEN*');
     sb.writeln('• Nama Pemesan: ${res.namaPemesanSnapshot}');
     sb.writeln('• No. WhatsApp: ${res.waPemesanSnapshot}');
-    sb.writeln('• Nama Pasien/Penerima: ${res.namaPenerimaLayanan} (${res.usiaPenerima})');
+    sb.writeln(
+      '• Nama Pasien/Penerima: ${res.namaPenerimaLayanan} (${res.usiaPenerima})',
+    );
     if (res.catatanKhusus.trim().isNotEmpty) {
       sb.writeln('• Catatan Keluhan/Kondisi: ${res.catatanKhusus}');
     }
@@ -888,10 +1266,13 @@ class ElwafyStore extends ChangeNotifier {
     sb.writeln('🛍️ *RINCIAN LAYANAN / ITEM*');
     for (final item in res.items) {
       sb.writeln(
-          '• ${item.namaItemSnapshot} (${item.qty}x @ ${FormatHelper.rupiah(item.hargaSaatPesan)}) = *${FormatHelper.rupiah(item.subtotal)}*');
+        '• ${item.namaItemSnapshot} (${item.qty}x @ ${FormatHelper.rupiah(item.hargaSaatPesan)}) = *${FormatHelper.rupiah(item.subtotal)}*',
+      );
     }
     sb.writeln('----------------------------------------');
-    sb.writeln('💰 *TOTAL ESTIMASI: ${FormatHelper.rupiah(res.totalSnapshot)}*');
+    sb.writeln(
+      '💰 *TOTAL ESTIMASI: ${FormatHelper.rupiah(res.totalSnapshot)}*',
+    );
     sb.writeln('----------------------------------------');
     sb.writeln('');
     sb.writeln('💳 *INSTRUKSI PEMBAYARAN RESMI ELWAFY CARE*');
@@ -901,11 +1282,11 @@ class ElwafyStore extends ChangeNotifier {
     sb.writeln('• Tautan QRIS: ${_settings.tautanQris}');
     sb.writeln('');
     sb.writeln(
-        'Mohon konfirmasi apakah jadwal tersebut tersedia ya Kak. Setelah dikonfirmasi saya akan mengirimkan bukti transfer di chat ini. Terima kasih! 🙏');
+      'Mohon konfirmasi apakah jadwal tersebut tersedia ya Kak. Setelah dikonfirmasi saya akan mengirimkan bukti transfer di chat ini. Terima kasih! 🙏',
+    );
     return sb.toString();
   }
 
-  // ALUR 2: ADMIN MEMPROSES RESERVASI, UBAH STATUS / JADWAL, & ASSIGN PETUGAS (Halaman 9 & 10)
   void updateReservationStatusByAdmin({
     required String reservationId,
     required ReservationStatus newStatus,
@@ -963,7 +1344,6 @@ class ElwafyStore extends ChangeNotifier {
     final now = DateTime.now();
     final isKaryawan = petugas.role == UserRole.karyawan;
 
-    // Buat token tugas acak & terbatas untuk Mitra (Halaman 9 & 17)
     final randomHex = List.generate(
       8,
       (_) => Random().nextInt(16).toRadixString(16).toUpperCase(),
@@ -1019,32 +1399,39 @@ class ElwafyStore extends ChangeNotifier {
   }
 
   String buildMitraWhatsAppInviteMessage(
-      Reservation res, TaskAssignment assignment) {
+    Reservation res,
+    TaskAssignment assignment,
+  ) {
     final sb = StringBuffer();
     sb.writeln('Halo *${assignment.assignedUserName}* 👋');
     sb.writeln('Ada penugasan layanan *Elwafy Care* di dekat wilayah Anda:');
     sb.writeln('');
     sb.writeln('📌 *No. Reservasi*: ${res.nomorReservasi}');
     sb.writeln('👶 *Pasien*: ${res.namaPenerimaLayanan} (${res.usiaPenerima})');
-    sb.writeln('🗓️ *Jadwal*: ${FormatHelper.tanggalIndo(res.tanggalDiminta)} - ${res.jamDiminta}');
-    sb.writeln('📍 *Wilayah*: ${res.wilayahHomecare ?? res.outletNamaSnapshot ?? "-"}');
+    sb.writeln(
+      '🗓️ *Jadwal*: ${FormatHelper.tanggalIndo(res.tanggalDiminta)} - ${res.jamDiminta}',
+    );
+    sb.writeln(
+      '📍 *Wilayah*: ${res.wilayahHomecare ?? res.outletNamaSnapshot ?? "-"}',
+    );
     sb.writeln('');
     sb.writeln('🔐 *TAUTAN TUGAS PORTAL MITRA (Berlaku Terbatas)*:');
     sb.writeln(assignment.tautanTugasLengkap);
     sb.writeln('Kode Token: *${assignment.tokenTugasHash}*');
     sb.writeln('');
     sb.writeln(
-        'Silakan buka tautan di atas (login ke Portal Mitra Elwafy) untuk melihat alamat rinci serta menekan tombol *TERIMA TUGAS* atau *TOLAK TUGAS*. Terima kasih! 🙏');
+      'Silakan buka tautan di atas (login ke Portal Mitra Elwafy) untuk melihat alamat rinci serta menekan tombol *TERIMA TUGAS* atau *TOLAK TUGAS*. Terima kasih! 🙏',
+    );
     return sb.toString();
   }
 
-  // ALUR 3: MITRA VALIDASI TAUTAN & TERIMA / TOLAK TUGAS (Halaman 12 & 17)
   ({
     bool valid,
     String message,
     Reservation? reservation,
     TaskAssignment? assignment,
-  }) validateMitraTaskToken(String tokenInput) {
+  })
+  validateMitraTaskToken(String tokenInput) {
     final cleanToken = tokenInput.trim();
     if (_loggedInMitra == null) {
       return (
@@ -1107,8 +1494,7 @@ class ElwafyStore extends ChangeNotifier {
     if (resIndex == -1) return;
 
     final oldRes = _reservations[resIndex];
-    final asgIndex =
-        oldRes.assignments.indexWhere((a) => a.id == assignmentId);
+    final asgIndex = oldRes.assignments.indexWhere((a) => a.id == assignmentId);
     if (asgIndex == -1) return;
 
     final oldAsg = oldRes.assignments[asgIndex];
@@ -1148,7 +1534,6 @@ class ElwafyStore extends ChangeNotifier {
       statusHistory: [...oldRes.statusHistory, historyItem],
     );
 
-    // Kirim notifikasi ke Telegram Admin (Halaman 12 & 14)
     _sendTelegramNotification(
       reservationNomor: oldRes.nomorReservasi,
       judul: terima
@@ -1162,7 +1547,6 @@ class ElwafyStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Kelola Katalog & Pengaturan oleh Admin
   void toggleCatalogItemStatus(String itemId) {
     final idx = _catalog.indexWhere((c) => c.id == itemId);
     if (idx == -1) return;
@@ -1200,4 +1584,3 @@ class ElwafyStore extends ChangeNotifier {
     );
   }
 }
-

@@ -9,7 +9,10 @@ void main() {
 }
 
 class ElwafyCareApp extends StatefulWidget {
-  const ElwafyCareApp({super.key});
+  /// Set false pada widget test agar tidak ada timer splash yang menggantung.
+  final bool showSplash;
+
+  const ElwafyCareApp({super.key, this.showSplash = true});
 
   @override
   State<ElwafyCareApp> createState() => _ElwafyCareAppState();
@@ -36,7 +39,7 @@ class _ElwafyCareAppState extends State<ElwafyCareApp> {
       title: 'Elwafy Care — Mom, Kids & Baby Spa',
       debugShowCheckedModeBanner: false,
       theme: ElwafyTheme.lightTheme,
-      home: MainShell(store: _store),
+      home: MainShell(store: _store, showSplash: widget.showSplash),
     );
   }
 }

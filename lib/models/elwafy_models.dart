@@ -66,7 +66,7 @@ class AppUser {
   final String passwordHash;
   final UserRole role;
   final String whatsapp;
-  final String wilayah; // Memudahkan Admin memilih mitra terdekat
+  final String wilayah;
   final String spesialisasi;
   final bool statusAktif;
 
@@ -267,7 +267,7 @@ class ReservationStatusHistory {
   });
 }
 
-/// Log Notifikasi Telegram Bot Internal (Sesuai DFD & Hal 14)
+/// Log Notifikasi Telegram Bot Internal
 class TelegramNotifLog {
   final String id;
   final String reservationNomor;
@@ -290,10 +290,10 @@ class TelegramNotifLog {
 class Reservation {
   final String id;
   final String nomorReservasi;
-  final String? customerUserId; // Opsional (Guest Checkout didukung)
+  final String? customerUserId;
   final String namaPemesanSnapshot;
   final String waPemesanSnapshot;
-  final String namaPenerimaLayanan; // Nama Bayi / Anak / Bunda
+  final String namaPenerimaLayanan;
   final String usiaPenerima;
   final String catatanKhusus;
   final ServiceMode mode;
@@ -308,7 +308,7 @@ class Reservation {
   final String jamDiminta;
   final int totalSnapshot;
   final ReservationStatus statusReservasi;
-  final String catatanPembayaranInternal; // Catatan manual admin (bukan payment gateway)
+  final String catatanPembayaranInternal;
   final DateTime createdAt;
   final List<ReservationItem> items;
   final List<TaskAssignment> assignments;
@@ -430,3 +430,119 @@ class AppSettingsData {
   }
 }
 
+/// 9. Model Berita & Edukasi Kesehatan (Beranda v2)
+class HealthArticle {
+  final String id;
+  final String judul;
+  final String
+  kategori; // misal: 'Tumbuh Kembang Bayi', 'Imun & Kesehatan Anak', 'Laktasi & Bunda'
+  final String ringkasan;
+  final List<String> isiParagraf;
+  final List<String> poinPenting;
+  final String penulis;
+  final int waktuBacaMenit;
+  final DateTime tanggalPublikasi;
+  final String? relatedCatalogItemId;
+  final String imageUrl;
+
+  const HealthArticle({
+    required this.id,
+    required this.judul,
+    required this.kategori,
+    required this.ringkasan,
+    required this.isiParagraf,
+    this.poinPenting = const [],
+    required this.penulis,
+    this.waktuBacaMenit = 3,
+    required this.tanggalPublikasi,
+    this.relatedCatalogItemId,
+    this.imageUrl =
+        'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=700&q=80',
+  });
+}
+
+/// 10. Model Konsultan Bidan & Tanya Jawab (Fitur Tanya Bidan ala Halodoc)
+class MidwifeConsultant {
+  final String id;
+  final String nama;
+  final String spesialis;
+  final String kategoriSpesialis;
+  final String pengalaman;
+  final String rating;
+  final String kepuasanPersen;
+  final String nomorStr;
+  final String sertifikasi;
+  final String lokasiPraktik;
+  final String imageUrl;
+  final bool isOnline;
+  final String whatsapp;
+  final List<String> topikKeahlian;
+
+  const MidwifeConsultant({
+    required this.id,
+    required this.nama,
+    required this.spesialis,
+    this.kategoriSpesialis = 'Laktasi & Nifas',
+    required this.pengalaman,
+    this.rating = '4.9',
+    this.kepuasanPersen = '99%',
+    this.nomorStr = 'STR. 120252219-8841',
+    this.sertifikasi = 'Certified Mom & Baby Care, CIMI, Pediatric Tuina',
+    this.lokasiPraktik = 'Elwafy Care, Jl. Sei Mencirim, Sunggal',
+    this.imageUrl =
+        'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80',
+    this.isOnline = true,
+    required this.whatsapp,
+    this.topikKeahlian = const [],
+  });
+}
+
+class ConsultMessage {
+  final String id;
+  final String senderName;
+  final bool isFromCustomer;
+  final String text;
+  final DateTime timestamp;
+  final String? recommendedCatalogItemId;
+
+  const ConsultMessage({
+    required this.id,
+    required this.senderName,
+    required this.isFromCustomer,
+    required this.text,
+    required this.timestamp,
+    this.recommendedCatalogItemId,
+  });
+}
+
+class ConsultThread {
+  final String id;
+  final String consultantId;
+  final String consultantName;
+  final String customerName;
+  final List<ConsultMessage> messages;
+  final DateTime updatedAt;
+
+  const ConsultThread({
+    required this.id,
+    required this.consultantId,
+    required this.consultantName,
+    required this.customerName,
+    required this.messages,
+    required this.updatedAt,
+  });
+
+  ConsultThread copyWith({
+    List<ConsultMessage>? messages,
+    DateTime? updatedAt,
+  }) {
+    return ConsultThread(
+      id: id,
+      consultantId: consultantId,
+      consultantName: consultantName,
+      customerName: customerName,
+      messages: messages ?? this.messages,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}

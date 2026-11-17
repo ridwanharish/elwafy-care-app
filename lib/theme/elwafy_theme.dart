@@ -3,10 +3,16 @@ import '../models/elwafy_models.dart';
 
 class ElwafyColors {
   // Warna utama diadaptasi dari Logo & Instagram @elwafy.care
-  static const Color primaryBlue = Color(0xFF0A58CA); // Royal/Cobalt Blue ("Elwafy" & pita)
-  static const Color skyBlue = Color(0xFF00A8FF); // Bright Cyan/Sky Blue (Lingkaran logo)
+  static const Color primaryBlue = Color(
+    0xFF0A58CA,
+  ); // Royal/Cobalt Blue ("Elwafy" & pita)
+  static const Color skyBlue = Color(
+    0xFF00A8FF,
+  ); // Bright Cyan/Sky Blue (Lingkaran logo)
   static const Color lightSky = Color(0xFF56CCF2);
-  static const Color babyBlueBg = Color(0xFFF2F8FF); // Cloud Baby Blue background
+  static const Color babyBlueBg = Color(
+    0xFFF2F8FF,
+  ); // Cloud Baby Blue background
   static const Color softBlueCard = Color(0xFFE3F2FD);
   static const Color navyDark = Color(0xFF072B61);
   static const Color textPrimary = Color(0xFF1A2B49);
@@ -60,18 +66,28 @@ class ElwafyTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: ElwafyColors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: ElwafyColors.primaryBlue.withValues(alpha: 0.2)),
+          borderSide: BorderSide(
+            color: ElwafyColors.primaryBlue.withValues(alpha: 0.2),
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: ElwafyColors.primaryBlue.withValues(alpha: 0.18)),
+          borderSide: BorderSide(
+            color: ElwafyColors.primaryBlue.withValues(alpha: 0.18),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: ElwafyColors.primaryBlue, width: 1.8),
+          borderSide: const BorderSide(
+            color: ElwafyColors.primaryBlue,
+            width: 1.8,
+          ),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -83,10 +99,7 @@ class ElwafyTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 14,
-          ),
+          textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -97,10 +110,7 @@ class ElwafyTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
-          ),
+          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
         ),
       ),
     );
@@ -153,11 +163,7 @@ class ElwafyLogo extends StatelessWidget {
   final double size;
   final bool showBorder;
 
-  const ElwafyLogo({
-    super.key,
-    this.size = 48,
-    this.showBorder = true,
-  });
+  const ElwafyLogo({super.key, this.size = 48, this.showBorder = true});
 
   @override
   Widget build(BuildContext context) {

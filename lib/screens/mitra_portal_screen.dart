@@ -7,10 +7,7 @@ import '../theme/elwafy_theme.dart';
 class MitraPortalScreen extends StatefulWidget {
   final ElwafyStore store;
 
-  const MitraPortalScreen({
-    super.key,
-    required this.store,
-  });
+  const MitraPortalScreen({super.key, required this.store});
 
   @override
   State<MitraPortalScreen> createState() => _MitraPortalScreenState();
@@ -26,6 +23,9 @@ class _MitraPortalScreenState extends State<MitraPortalScreen> {
     _tokenCtrl = TextEditingController(
       text: widget.store.openedTaskToken ?? 'TKN-ELW-9942A7B1',
     );
+    if (widget.store.openedTaskToken != null) {
+      _mitraNavIndex = 1;
+    }
   }
 
   @override
@@ -34,6 +34,7 @@ class _MitraPortalScreenState extends State<MitraPortalScreen> {
     if (widget.store.openedTaskToken != null &&
         widget.store.openedTaskToken != _tokenCtrl.text) {
       _tokenCtrl.text = widget.store.openedTaskToken!;
+      _mitraNavIndex = 1;
     }
   }
 
@@ -196,9 +197,7 @@ class _MitraPortalScreenState extends State<MitraPortalScreen> {
     }
 
     final waitingCount = myTasks
-        .where(
-          (t) => t.asg.statusRespons == AssignmentResponseStatus.menunggu,
-        )
+        .where((t) => t.asg.statusRespons == AssignmentResponseStatus.menunggu)
         .length;
 
     return Scaffold(
@@ -215,15 +214,10 @@ class _MitraPortalScreenState extends State<MitraPortalScreen> {
                 children: [
                   const Text(
                     'Portal Mitra Elwafy',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
                   ),
                   Text(
-                    activeMitra != null
-                        ? activeMitra.nama
-                        : 'Sesi Belum Login',
+                    activeMitra != null ? activeMitra.nama : 'Sesi Belum Login',
                     style: const TextStyle(fontSize: 11, color: Colors.white70),
                   ),
                 ],
@@ -374,9 +368,10 @@ class _MitraPortalScreenState extends State<MitraPortalScreen> {
     for (final r in widget.store.reservations) {
       for (final a in r.assignments) {
         if (a.assignedUserRole == UserRole.mitra) {
-          allTokens.add(
-            (token: a.tokenTugasHash, ownerName: a.assignedUserName),
-          );
+          allTokens.add((
+            token: a.tokenTugasHash,
+            ownerName: a.assignedUserName,
+          ));
         }
       }
     }
@@ -392,10 +387,7 @@ class _MitraPortalScreenState extends State<MitraPortalScreen> {
               children: [
                 const Text(
                   'Verifikasi Tautan Tugas WhatsApp',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 const SizedBox(height: 4),
                 const Text(
@@ -489,10 +481,8 @@ class _MitraPortalScreenState extends State<MitraPortalScreen> {
           _CleanMitraTaskCard(
             reservation: validation.reservation!,
             assignment: validation.assignment!,
-            onAccept: () => _acceptTask(
-              validation.reservation!,
-              validation.assignment!,
-            ),
+            onAccept: () =>
+                _acceptTask(validation.reservation!, validation.assignment!),
             onReject: () => _showRejectReasonDialog(
               validation.reservation!,
               validation.assignment!,
@@ -518,10 +508,7 @@ class _MitraPortalScreenState extends State<MitraPortalScreen> {
               children: [
                 const Text(
                   'Pilih Sesi Login Mitra Homecare',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 const SizedBox(height: 6),
                 const Text(
@@ -655,8 +642,8 @@ class _CleanMitraTaskCard extends StatelessWidget {
                     color: isWaiting
                         ? ElwafyColors.warningAmber.withValues(alpha: 0.16)
                         : isAccepted
-                            ? ElwafyColors.successGreen.withValues(alpha: 0.16)
-                            : ElwafyColors.dangerRed.withValues(alpha: 0.16),
+                        ? ElwafyColors.successGreen.withValues(alpha: 0.16)
+                        : ElwafyColors.dangerRed.withValues(alpha: 0.16),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
@@ -667,8 +654,8 @@ class _CleanMitraTaskCard extends StatelessWidget {
                       color: isWaiting
                           ? const Color(0xFFB45309)
                           : isAccepted
-                              ? ElwafyColors.successGreen
-                              : ElwafyColors.dangerRed,
+                          ? ElwafyColors.successGreen
+                          : ElwafyColors.dangerRed,
                     ),
                   ),
                 ),
@@ -677,10 +664,7 @@ class _CleanMitraTaskCard extends StatelessWidget {
             const Divider(height: 18),
             Text(
               '👶 Pasien: ${reservation.namaPenerimaLayanan} (${reservation.usiaPenerima})',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
             const SizedBox(height: 4),
             Text(
@@ -694,7 +678,10 @@ class _CleanMitraTaskCard extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               '📍 Wilayah: ${reservation.wilayahHomecare ?? reservation.outletNamaSnapshot ?? "-"}',
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12.5),
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 12.5,
+              ),
             ),
             if (reservation.mode == ServiceMode.homecare) ...[
               Text(
