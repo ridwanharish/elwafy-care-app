@@ -13,6 +13,28 @@ Aplikasi *mobile* berbasis **Flutter** yang dirancang khusus untuk UMKM **Elwafy
 
 ---
 
+## 📱 Cara Paling Mudah Mencoba Aplikasi (Khusus Pemilik UMKM / Non-Teknis)
+
+Jika Anda adalah pemilik/tim UMKM **Elwafy Care** dan hanya ingin **langsung mencoba aplikasinya di HP Android** (tanpa perlu mengerti kodingan atau menginstal aplikasi *programmer* di laptop):
+
+1. **Unduh File Instalasi (`.apk`)**:
+   - Buka menu **[Releases](https://github.com/ridwanharish/elwafy-care-app/releases)** di halaman GitHub ini (atau gunakan file `app-release.apk` yang dikirimkan melalui WhatsApp).
+2. **Pasang (*Install*) di HP Android**:
+   - Ketuk file `.apk` tersebut di HP Anda. Jika muncul peringatan *"Install aplikasi dari sumber ini"*, pilih **Izinkan / Tetap Install**.
+3. **Buka Aplikasi `Elwafy Care`** (Ikon biru bergambar Ibu & Bayi Elwafy):
+   - Saat pertama dibuka, Anda berada di **Tampilan Pelanggan (Bunda)**.
+   - Untuk mencoba **Dashboard Pengelola (Admin)** atau **Portal Bidan Mitra**, ketuk menu **`Profil`** di pojok kanan bawah $\rightarrow$ pilih **`Masuk Dashboard Admin`** (Email: `admin@elwafy.care`, Sandi: `admin123`) atau **`Masuk Portal Mitra Homecare`**.
+
+### ❓ Hal Penting yang Perlu Dipahami Saat Mencoba Aplikasi Ini (FAQ)
+- **Q: Kenapa saat aplikasi ditutup paksa (*close app*), pesanan contoh yang baru saya buat kembali ke awal?**
+  - **A:** Karena tahap ini adalah **Kerangka Besar Aplikasi (*Prototype MVP*)** dan **belum dihubungkan ke server/database internet berbayar**. Selama aplikasi dibuka, semua fitur (buat pesanan, *approve* jadwal di Admin, *assign* bidan mitra, sampai tukar *Elwafy Poin*) berjalan normal dan saling terhubung di dalam HP tersebut.
+- **Q: Kenapa di menu `Profil` pelanggan ada tombol "Masuk Dashboard Admin" dan "Masuk Portal Mitra"?**
+  - **A:** Sengaja disatukan di dalam 1 aplikasi agar pemilik UMKM bisa **mencoba ketiga peran sekaligus (sebagai Bunda, sebagai Admin, dan sebagai Bidan Mitra)** di satu HP yang sama. Nanti pada tahap operasional penuh, menu Admin dan Mitra akan dikunci khusus untuk staf saja.
+- **Q: Apakah tombol WhatsApp di aplikasi ini sudah benar-benar jalan?**
+  - **A:** **Sudah 100% jalan!** Saat pelanggan selesai mengisi jadwal reservasi atau menukar hadiah *Elwafy Poin*, tombol WhatsApp akan langsung membuka aplikasi WhatsApp asli di HP dengan teks pesanan lengkap menuju nomor Admin Elwafy Care (`0822-8999-2812`).
+
+---
+
 ## 📊 Status Pengembangan Saat Ini (Penting Dibaca!)
 
 > **Catatan Transparansi Proyek:**
