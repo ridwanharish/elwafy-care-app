@@ -251,6 +251,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               r.statusReservasi == ReservationStatus.ditolakMitra,
         )
         .length;
+    final pendingRedemptionCount = widget.store.redemptions
+        .where((rdm) => rdm.status == RedemptionStatus.menunggu)
+        .length;
 
     return Scaffold(
       appBar: AppBar(
@@ -340,11 +343,19 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             ),
             label: 'Keuangan',
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.medical_services_outlined),
-            selectedIcon: Icon(
-              Icons.medical_services_rounded,
-              color: ElwafyColors.primaryBlue,
+          NavigationDestination(
+            icon: Badge(
+              isLabelVisible: pendingRedemptionCount > 0,
+              label: Text('$pendingRedemptionCount'),
+              child: const Icon(Icons.medical_services_outlined),
+            ),
+            selectedIcon: Badge(
+              isLabelVisible: pendingRedemptionCount > 0,
+              label: Text('$pendingRedemptionCount'),
+              child: const Icon(
+                Icons.medical_services_rounded,
+                color: ElwafyColors.primaryBlue,
+              ),
             ),
             label: 'Mitra',
           ),
@@ -1428,6 +1439,189 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             ),
           ),
         ),
+        const SizedBox(height: 12),
+        // VALIDASI PENUKARAN HADIAH ELWAFY POIN OLEH ADMIN
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Row(
+                  children: [
+                    Icon(
+                      Icons.card_giftcard_rounded,
+                      color: ElwafyColors.primaryBlue,
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Validasi Penukaran Hadiah Elwafy Poin',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'Periksa kode penukaran Bunda (ELW-RDM-XXXX) sebelum menyerahkan hadiah fisik/layanan. Jika ditolak, poin otomatis kembali ke Bunda:',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: ElwafyColors.textSecondary,
+                  ),
+                ),
+                const Divider(height: 18),
+                for (final rdm in widget.store.redemptions)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: ElwafyColors.babyBlueBg,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              rdm.kode,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 13.5,
+                                color: ElwafyColors.primaryBlue,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                color: rdm.status == RedemptionStatus.diambil
+                                    ? ElwafyColors.successGreen.withValues(
+                                        alpha: 0.15,
+                                      )
+                                    : rdm.status == RedemptionStatus.ditolak
+                                    ? ElwafyColors.dangerRed.withValues(
+                                        alpha: 0.15,
+                                      )
+                                    : ElwafyColors.warningAmber.withValues(
+                                        alpha: 0.2,
+                                      ),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                rdm.status.label,
+                                style: TextStyle(
+                                  fontSize: 10.5,
+                                  fontWeight: FontWeight.bold,
+                                  color: rdm.status == RedemptionStatus.diambil
+                                      ? ElwafyColors.successGreen
+                                      : rdm.status == RedemptionStatus.ditolak
+                                      ? ElwafyColors.dangerRed
+                                      : const Color(0xFFB45309),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '🎁 ${rdm.rewardNama} (${rdm.poin} Poin)',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.5,
+                          ),
+                        ),
+                        Text(
+                          'Pelanggan: ${rdm.namaPemilik} • WA: ${rdm.waKey}',
+                          style: const TextStyle(
+                            fontSize: 11.5,
+                            color: ElwafyColors.textSecondary,
+                          ),
+                        ),
+                        if (rdm.status == RedemptionStatus.menunggu) ...[
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: OutlinedButton(
+                                  onPressed: () {
+                                    widget.store.validateRewardRedemption(
+                                      redemptionId: rdm.id,
+                                      approve: false,
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Penukaran ${rdm.kode} ditolak & ${rdm.poin} Poin dikembalikan.',
+                                        ),
+                                        backgroundColor: ElwafyColors.dangerRed,
+                                      ),
+                                    );
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: ElwafyColors.dangerRed,
+                                    side: const BorderSide(
+                                      color: ElwafyColors.dangerRed,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8,
+                                    ),
+                                    minimumSize: Size.zero,
+                                  ),
+                                  child: const Text(
+                                    'Tolak (Poin Kembali)',
+                                    style: TextStyle(fontSize: 11.5),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    widget.store.validateRewardRedemption(
+                                      redemptionId: rdm.id,
+                                      approve: true,
+                                    );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Kode ${rdm.kode} tervalidasi! Hadiah diserahkan.',
+                                        ),
+                                        backgroundColor:
+                                            ElwafyColors.successGreen,
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: ElwafyColors.successGreen,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8,
+                                    ),
+                                    minimumSize: Size.zero,
+                                  ),
+                                  child: const Text(
+                                    'Validasi & Serahkan',
+                                    style: TextStyle(fontSize: 11.5),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -2363,29 +2557,70 @@ class _AdminReservationDetailScreenState
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {
-                                widget.store.updateReservationStatusByAdmin(
-                                  reservationId: res.id,
-                                  newStatus: ReservationStatus.selesai,
-                                  catatan: 'Layanan selesai dikerjakan.',
-                                );
-                              },
+                              onPressed:
+                                  res.statusReservasi ==
+                                      ReservationStatus.selesai
+                                  ? null
+                                  : () {
+                                      widget.store
+                                          .updateReservationStatusByAdmin(
+                                            reservationId: res.id,
+                                            newStatus:
+                                                ReservationStatus.selesai,
+                                            catatan:
+                                                'Layanan selesai dikerjakan.',
+                                          );
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Reservasi ditandai Selesai! Elwafy Poin otomatis ditambahkan ke saldo Bunda.',
+                                          ),
+                                          backgroundColor:
+                                              ElwafyColors.successGreen,
+                                        ),
+                                      );
+                                    },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: ElwafyColors.successGreen,
                               ),
-                              child: const Text('Tandai Selesai'),
+                              child: Text(
+                                res.statusReservasi == ReservationStatus.selesai
+                                    ? 'Sudah Selesai'
+                                    : 'Tandai Selesai',
+                              ),
                             ),
                           ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: OutlinedButton(
-                              onPressed: () {
-                                widget.store.updateReservationStatusByAdmin(
-                                  reservationId: res.id,
-                                  newStatus: ReservationStatus.dibatalkan,
-                                  catatan: 'Reservasi dibatalkan.',
-                                );
-                              },
+                              onPressed:
+                                  res.statusReservasi ==
+                                          ReservationStatus.dibatalkan ||
+                                      res.statusReservasi ==
+                                          ReservationStatus.selesai
+                                  ? null
+                                  : () {
+                                      widget.store
+                                          .updateReservationStatusByAdmin(
+                                            reservationId: res.id,
+                                            newStatus:
+                                                ReservationStatus.dibatalkan,
+                                            catatan: 'Reservasi dibatalkan.',
+                                          );
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Reservasi telah dibatalkan.',
+                                          ),
+                                          backgroundColor:
+                                              ElwafyColors.dangerRed,
+                                        ),
+                                      );
+                                    },
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: ElwafyColors.dangerRed,
                                 side: const BorderSide(

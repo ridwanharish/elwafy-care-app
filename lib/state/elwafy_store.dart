@@ -516,11 +516,137 @@ class ElwafyStore extends ChangeNotifier {
   final List<TelegramNotifLog> _telegramLogs = [];
   List<TelegramNotifLog> get telegramLogs => List.unmodifiable(_telegramLogs);
 
+  // Katalog Hadiah Resmi Elwafy Poin (Non-Rupiah: Produk & Layanan yang Disiapkan Elwafy)
+  final List<RewardItem> _rewards = [
+    const RewardItem(
+      id: 'rwd-1',
+      nama: 'Elwafy Natural Calming Roll-On Oil (10ml)',
+      deskripsi:
+          'Minyak telon & aromaterapi lavender-chamomile organik penghangat perut bayi (diambil di Outlet / dibawa Terapis Homecare).',
+      emoji: '🧴',
+      poin: 40,
+      stok: 15,
+    ),
+    const RewardItem(
+      id: 'rwd-2',
+      nama: 'Set Handuk & Washcloth Katun Lembut Bayi',
+      deskripsi:
+          'Merchandise eksklusif Elwafy Care berbahan 100% bamboo cotton ramah kulit sensitif bayi.',
+      emoji: '🧺',
+      poin: 60,
+      stok: 10,
+    ),
+    const RewardItem(
+      id: 'rwd-3',
+      nama: 'Free Upgrade: Sinar Infrared + Uap Nebulizer',
+      deskripsi:
+          'Tambahan terapi penyinaran hangat & inhalasi uap steril gratis saat sesi pijat bayi/anak berikutnya.',
+      emoji: '🌬️',
+      poin: 75,
+      stok: 12,
+    ),
+    const RewardItem(
+      id: 'rwd-4',
+      nama: 'Gratis 1x Sesi Baby Happy Massage (45 Menit)',
+      deskripsi:
+          'Hadiah utama loyalitas Bunda: 1 sesi pijat bayi sehat penuh bersama Bidan tersertifikasi.',
+      emoji: '👶',
+      poin: 100,
+      stok: 8,
+    ),
+    const RewardItem(
+      id: 'rwd-5',
+      nama: 'Gratis 1x Sesi Pijat Oksitosin & Laktasi Bunda',
+      deskripsi:
+          'Perawatan relaksasi punggung & pelancar ASI khusus Bunda menyusui.',
+      emoji: '🤱',
+      poin: 140,
+      stok: 5,
+    ),
+  ];
+  List<RewardItem> get rewards => List.unmodifiable(_rewards);
+
+  final List<PointEntry> _pointLedger = [];
+  List<PointEntry> get pointLedger => List.unmodifiable(_pointLedger);
+
+  final List<RewardRedemption> _redemptions = [];
+  List<RewardRedemption> get redemptions => List.unmodifiable(_redemptions);
+
+  int get customerPointsBalance =>
+      _pointLedger.fold(0, (sum, item) => sum + item.poin);
+
   ElwafyStore() {
     _loggedInAdmin = _users.firstWhere((u) => u.role == UserRole.admin);
     _loggedInMitra = _users.firstWhere((u) => u.id == 'usr-mitra-1');
     _seedInitialReservations();
     _seedInitialConsultThreads();
+    _seedInitialElwafyPoints();
+  }
+
+  void _seedInitialElwafyPoints() {
+    final now = DateTime.now();
+    // Riwayat mutasi poin yang konsisten dengan tiket ELW-RDM-8841 (-40 Poin) -> Saldo bersih = 95 Poin
+    _pointLedger.addAll([
+      PointEntry(
+        id: 'pt-5',
+        waKey: '081260998877',
+        deskripsi:
+            'Tukar Hadiah: Elwafy Natural Calming Roll-On Oil (ELW-RDM-8841)',
+        poin: -40,
+        createdAt: now.subtract(const Duration(hours: 3)),
+      ),
+      PointEntry(
+        id: 'pt-4',
+        waKey: '081260998877',
+        deskripsi: 'Selesai Perawatan: Baby Cough & Cold Therapy (+20 Poin)',
+        poin: 20,
+        createdAt: now.subtract(const Duration(days: 2)),
+      ),
+      PointEntry(
+        id: 'pt-3',
+        waKey: '081260998877',
+        deskripsi: 'Selesai Paket: Baby Brain Gym, Swim & Massage (+30 Poin)',
+        poin: 30,
+        createdAt: now.subtract(const Duration(days: 9)),
+      ),
+      PointEntry(
+        id: 'pt-2b',
+        waKey: '081260998877',
+        deskripsi:
+            'Selesai Paket: Mom Postnatal & Laktasi + Baby Massage (+40 Poin)',
+        poin: 40,
+        createdAt: now.subtract(const Duration(days: 14)),
+      ),
+      PointEntry(
+        id: 'pt-2',
+        waKey: '081260998877',
+        deskripsi: 'Selesai Perawatan: Mom Postnatal & Laktasi (+25 Poin)',
+        poin: 25,
+        createdAt: now.subtract(const Duration(days: 18)),
+      ),
+      PointEntry(
+        id: 'pt-1',
+        waKey: '081260998877',
+        deskripsi: 'Bonus Member Loyalitas Elwafy Care (+20 Poin)',
+        poin: 20,
+        createdAt: now.subtract(const Duration(days: 30)),
+      ),
+    ]);
+
+    _redemptions.add(
+      RewardRedemption(
+        id: 'rdm-seed-1',
+        kode: 'ELW-RDM-8841',
+        waKey: '081260998877',
+        namaPemilik: 'Bunda Sarah Azzahra',
+        rewardId: 'rwd-1',
+        rewardNama: 'Elwafy Natural Calming Roll-On Oil (10ml)',
+        poin: 40,
+        status: RedemptionStatus.menunggu,
+        createdAt: now.subtract(const Duration(hours: 3)),
+        expiry: now.add(const Duration(days: 7)),
+      ),
+    );
   }
 
   void _seedInitialConsultThreads() {
@@ -1318,6 +1444,35 @@ class ElwafyStore extends ChangeNotifier {
           updatedPaymentNote ?? oldRes.catatanPembayaranInternal,
       statusHistory: [...oldRes.statusHistory, historyItem],
     );
+
+    // Jika status baru diubah menjadi SELESAI, otomatis tambahkan Elwafy Poin (berdasarkan jenis layanan, bukan Rupiah)
+    if (newStatus == ReservationStatus.selesai &&
+        oldRes.statusReservasi != ReservationStatus.selesai) {
+      int earnedPoints = 0;
+      for (final item in oldRes.items) {
+        if (item.tipeSnapshot == CatalogType.paket) {
+          earnedPoints += 30 * item.qty;
+        } else if (item.tipeSnapshot == CatalogType.layanan) {
+          earnedPoints += 20 * item.qty;
+        } else {
+          earnedPoints += 10 * item.qty;
+        }
+      }
+      if (earnedPoints <= 0) earnedPoints = 20;
+
+      _pointLedger.insert(
+        0,
+        PointEntry(
+          id: 'pt-${DateTime.now().millisecondsSinceEpoch}',
+          waKey: oldRes.waPemesanSnapshot,
+          deskripsi:
+              'Selesai Reservasi ${oldRes.nomorReservasi} (${oldRes.namaPenerimaLayanan})',
+          poin: earnedPoints,
+          createdAt: DateTime.now(),
+        ),
+      );
+    }
+
     notifyListeners();
   }
 
@@ -1563,6 +1718,129 @@ class ElwafyStore extends ChangeNotifier {
 
   void updateAppSettings(AppSettingsData newSettings) {
     _settings = newSettings;
+    notifyListeners();
+  }
+
+  /// Tukar Elwafy Poin dengan Hadiah Resmi (Status Awal: Menunggu Validasi Admin)
+  ({bool success, String message, RewardRedemption? redemption})
+  redeemElwafyReward(String rewardId) {
+    final idx = _rewards.indexWhere((r) => r.id == rewardId);
+    if (idx == -1) {
+      return (
+        success: false,
+        message: 'Hadiah tidak ditemukan.',
+        redemption: null,
+      );
+    }
+    final reward = _rewards[idx];
+    if (reward.stok <= 0) {
+      return (
+        success: false,
+        message: 'Stok hadiah ini sedang habis di Outlet.',
+        redemption: null,
+      );
+    }
+    if (customerPointsBalance < reward.poin) {
+      return (
+        success: false,
+        message:
+            'Poin Bunda belum cukup (Butuh ${reward.poin} Poin, saldo saat ini $customerPointsBalance Poin).',
+        redemption: null,
+      );
+    }
+
+    final now = DateTime.now();
+    final randCode = (1000 + Random().nextInt(9000)).toString();
+    final kode = 'ELW-RDM-$randCode';
+    final customerName = _loggedInCustomer?.nama ?? 'Bunda Sarah Azzahra';
+    final customerWa = _loggedInCustomer?.whatsapp ?? '081260998877';
+
+    // Kurangi stok hadiah & kunci poin pelanggan
+    _rewards[idx] = reward.copyWith(stok: reward.stok - 1);
+    _pointLedger.insert(
+      0,
+      PointEntry(
+        id: 'pt-${now.millisecondsSinceEpoch}',
+        waKey: customerWa,
+        deskripsi: 'Tukar Hadiah: ${reward.nama} ($kode)',
+        poin: -reward.poin,
+        createdAt: now,
+      ),
+    );
+
+    final newRedemption = RewardRedemption(
+      id: 'rdm-${now.millisecondsSinceEpoch}',
+      kode: kode,
+      waKey: customerWa,
+      namaPemilik: customerName,
+      rewardId: reward.id,
+      rewardNama: reward.nama,
+      poin: reward.poin,
+      status: RedemptionStatus.menunggu,
+      createdAt: now,
+      expiry: now.add(const Duration(days: 7)),
+    );
+    _redemptions.insert(0, newRedemption);
+
+    _sendTelegramNotification(
+      reservationNomor: kode,
+      judul: '🎁 Permintaan Tukar Poin Baru ($kode)',
+      isiPesan:
+          'Pelanggan: $customerName ($customerWa)\nHadiah: ${reward.nama}\nPoin: ${reward.poin} Poin\nStatus: Menunggu Validasi Admin di Outlet / Homecare.',
+    );
+
+    notifyListeners();
+    return (
+      success: true,
+      message:
+          'Berhasil menukar ${reward.poin} Poin! Tunjukkan kode $kode ke Admin/Bidan untuk validasi pengambilan hadiah.',
+      redemption: newRedemption,
+    );
+  }
+
+  /// Validasi atau Tolak Penukaran Hadiah oleh Admin (Jika ditolak, poin & stok kembali utuh)
+  void validateRewardRedemption({
+    required String redemptionId,
+    required bool approve,
+    String? catatan,
+  }) {
+    final idx = _redemptions.indexWhere((r) => r.id == redemptionId);
+    if (idx == -1) return;
+
+    final old = _redemptions[idx];
+    if (old.status != RedemptionStatus.menunggu) return;
+
+    final now = DateTime.now();
+    if (approve) {
+      _redemptions[idx] = old.copyWith(
+        status: RedemptionStatus.diambil,
+        validatedAt: now,
+        catatan: catatan ?? 'Hadiah telah divalidasi & diserahkan oleh Admin.',
+      );
+    } else {
+      _redemptions[idx] = old.copyWith(
+        status: RedemptionStatus.ditolak,
+        validatedAt: now,
+        catatan: catatan ?? 'Ditolak Admin — Poin dikembalikan ke saldo Bunda.',
+      );
+      // Kembalikan stok hadiah
+      final rIdx = _rewards.indexWhere((r) => r.id == old.rewardId);
+      if (rIdx != -1) {
+        _rewards[rIdx] = _rewards[rIdx].copyWith(stok: _rewards[rIdx].stok + 1);
+      }
+      // Kembalikan poin ke Bunda
+      _pointLedger.insert(
+        0,
+        PointEntry(
+          id: 'pt-refund-${now.millisecondsSinceEpoch}',
+          waKey: old.waKey,
+          deskripsi:
+              'Pengembalian Poin (${old.kode} Ditolak/Batal): ${old.rewardNama}',
+          poin: old.poin,
+          createdAt: now,
+        ),
+      );
+    }
     notifyListeners();
   }
 

@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/elwafy_models.dart';
 import '../state/elwafy_store.dart';
 import '../theme/elwafy_theme.dart';
+import 'elwafy_poin_screen.dart';
 import 'tanya_bidan_screen.dart';
 
 class CustomerFlowScreen extends StatefulWidget {
@@ -82,6 +83,12 @@ class _CustomerFlowScreenState extends State<CustomerFlowScreen> {
           onJumpToConsult: () => setState(() => _customerTab = 1),
         ),
       ),
+    );
+  }
+
+  void _openElwafyPoinScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => ElwafyPoinScreen(store: widget.store)),
     );
   }
 
@@ -1214,16 +1221,11 @@ class _CustomerFlowScreenState extends State<CustomerFlowScreen> {
                   Expanded(
                     child: _TopPillFeatureCard(
                       title: 'elwafypoin',
+                      subtitle: '${widget.store.customerPointsBalance} Poin',
                       icon: Icons.stars_rounded,
                       primaryColor: ElwafyColors.primaryBlue,
                       bgTint: const Color(0xFFF0F7FF),
-                      onTap: () => _openPromoAndVoucherSheet(
-                        title: 'Elwafy Poin & Member Bunda',
-                        subtitle:
-                            'Kumpulkan poin dari setiap reservasi Homecare maupun Outlet di Medan. Tukarkan 5x kunjungan dengan 1x Gratis Baby Happy Massage!',
-                        voucherCode: 'MEMBERELWAFY',
-                        recommendedCatalogId: 'cat-baby-1',
-                      ),
+                      onTap: _openElwafyPoinScreen,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -2180,6 +2182,17 @@ class _CustomerFlowScreenState extends State<CustomerFlowScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: _openElwafyPoinScreen,
+                    icon: const Icon(Icons.stars_rounded, size: 18),
+                    label: Text(
+                      'Elwafy Poin & Tukar Hadiah (${widget.store.customerPointsBalance} Poin)',
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -2390,6 +2403,7 @@ class _BottomBarNavItem extends StatelessWidget {
 
 class _TopPillFeatureCard extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final String? badgeText;
   final IconData icon;
   final Color primaryColor;
@@ -2398,6 +2412,7 @@ class _TopPillFeatureCard extends StatelessWidget {
 
   const _TopPillFeatureCard({
     required this.title,
+    this.subtitle,
     this.badgeText,
     required this.icon,
     required this.primaryColor,
@@ -2444,15 +2459,32 @@ class _TopPillFeatureCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(
-                    title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w800,
-                      color: primaryColor,
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w800,
+                          color: primaryColor,
+                        ),
+                      ),
+                      if (subtitle != null)
+                        Text(
+                          subtitle!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: ElwafyColors.textSecondary,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
                 Container(

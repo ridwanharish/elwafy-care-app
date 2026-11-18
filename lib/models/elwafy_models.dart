@@ -546,3 +546,112 @@ class ConsultThread {
     );
   }
 }
+
+/// 11. Sistem Elwafy Poin (poin TIDAK bernilai rupiah, hanya ditukar hadiah Elwafy)
+class RewardItem {
+  final String id;
+  final String nama;
+  final String deskripsi;
+  final String emoji;
+  final int poin;
+  final int stok;
+
+  const RewardItem({
+    required this.id,
+    required this.nama,
+    required this.deskripsi,
+    required this.emoji,
+    required this.poin,
+    required this.stok,
+  });
+
+  RewardItem copyWith({int? stok}) {
+    return RewardItem(
+      id: id,
+      nama: nama,
+      deskripsi: deskripsi,
+      emoji: emoji,
+      poin: poin,
+      stok: stok ?? this.stok,
+    );
+  }
+}
+
+enum RedemptionStatus {
+  menunggu('Menunggu validasi'),
+  diambil('Sudah diambil'),
+  ditolak('Ditolak / poin kembali');
+
+  final String label;
+  const RedemptionStatus(this.label);
+}
+
+class RewardRedemption {
+  final String id;
+  final String kode;
+  final String waKey;
+  final String namaPemilik;
+  final String rewardId;
+  final String rewardNama;
+  final int poin;
+  final RedemptionStatus status;
+  final DateTime createdAt;
+  final DateTime expiry;
+  final DateTime? validatedAt;
+  final String? catatan;
+
+  const RewardRedemption({
+    required this.id,
+    required this.kode,
+    required this.waKey,
+    required this.namaPemilik,
+    required this.rewardId,
+    required this.rewardNama,
+    required this.poin,
+    required this.status,
+    required this.createdAt,
+    required this.expiry,
+    this.validatedAt,
+    this.catatan,
+  });
+
+  bool get isExpired =>
+      status == RedemptionStatus.menunggu && DateTime.now().isAfter(expiry);
+
+  RewardRedemption copyWith({
+    RedemptionStatus? status,
+    DateTime? validatedAt,
+    String? catatan,
+  }) {
+    return RewardRedemption(
+      id: id,
+      kode: kode,
+      waKey: waKey,
+      namaPemilik: namaPemilik,
+      rewardId: rewardId,
+      rewardNama: rewardNama,
+      poin: poin,
+      status: status ?? this.status,
+      createdAt: createdAt,
+      expiry: expiry,
+      validatedAt: validatedAt ?? this.validatedAt,
+      catatan: catatan ?? this.catatan,
+    );
+  }
+}
+
+class PointEntry {
+  final String id;
+  final String waKey;
+  final String deskripsi;
+  final int poin; // positif = masuk, negatif = dipakai
+  final DateTime createdAt;
+
+  const PointEntry({
+    required this.id,
+    required this.waKey,
+    required this.deskripsi,
+    required this.poin,
+    required this.createdAt,
+  });
+}
