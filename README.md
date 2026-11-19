@@ -17,8 +17,9 @@ Aplikasi *mobile* berbasis **Flutter** yang dirancang khusus untuk UMKM **Elwafy
 
 Jika Anda adalah pemilik/tim UMKM **Elwafy Care** dan hanya ingin **langsung mencoba aplikasinya di HP Android** (tanpa perlu mengerti kodingan atau menginstal aplikasi *programmer* di laptop):
 
-1. **Unduh File Instalasi (`.apk`)**:
-   - Buka menu **[Releases](https://github.com/ridwanharish/elwafy-care-app/releases)** di halaman GitHub ini (atau gunakan file `app-release.apk` yang dikirimkan melalui WhatsApp).
+1. **Unduh File Instalasi (`.apk`) langsung dari GitHub ini**:
+   - Klik halaman **[Releases Elwafy Care](https://github.com/ridwanharish/elwafy-care-app/releases)** di repositori GitHub ini.
+   - Pada bagian **Assets** di bawah rilis terbaru (`v2.1.0`), klik file **`app-release.apk`** untuk mengunduhnya ke HP Android Anda.
 2. **Pasang (*Install*) di HP Android**:
    - Ketuk file `.apk` tersebut di HP Anda. Jika muncul peringatan *"Install aplikasi dari sumber ini"*, pilih **Izinkan / Tetap Install**.
 3. **Buka Aplikasi `Elwafy Care`** (Ikon biru bergambar Ibu & Bayi Elwafy):
